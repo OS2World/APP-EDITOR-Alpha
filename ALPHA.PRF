@@ -1,0 +1,435 @@
+;;==================================================================;;
+;; This is a sample profile, ALPHA.PRF, for the ALPHA V3.0 package. ;;
+;;==================================================================;;
+;;
+;; The case is significant. Invalid records are ignored.  
+;; Note - The format has changed from V2.7 !
+;;
+;; Lionel de Lambert, 26 Feb. 1996, IBM - Hursley
+;;
+;; The colours are :-
+;; BLUE,DARKCYAN,BLACK,DARKBLUE,DARKPINK,DARKGRAY,DARKRED,DARKGREEN,
+;; BROWN,CYAN,RED,GREEN,PINK,YELLOW,PALEGRAY,DEFAULT,WHITE
+;; for XGA, SVGA etc. screens with Alpha V2.x the following 
+;; colours may also be used :-
+;; ORANGE,PURPLE,PALEGREEN,PALEBLUE,PALEYELLOW,PALERED,COLOUR1,..,COLOUR8 
+;;
+;;
+;; Extension specifies the File types to be recognized.
+;; The string must be <=128 characters and terminated by a comma.
+;;
+;; The default is :- "A37,ASM,PAS,PLS,C,FOR,IPF,PRF,"         
+;; The positions 1-5 have significance for some of the analysis functions.
+Extension="A37,ASM,PAS,(PLS,PLX,PLI),(C,CPP,H),FOR,IPF,PRF,ADA,CMD,COB,JAVA,"
+;;
+;; Blocks of language definitions follow in the following format :-
+;;
+;; [C]                       ;; The file extension  
+;; Case=Yes                  ;; The language is case sensitive   
+;; CommentPos=0              ;; 0, 1-n
+;; Language=default          ;; FORTRAN, A37, ASM, C, None, default
+;; Comment="/*//*/  "        ;; start and end character pairs
+;; String="" ' " ' ",\       ;; start and end character pairs, escape character 
+;; Tab=10,16,36,72           ;; Up to eight tab positions 
+;; Keywords                  ;; The following is a list of keywords
+;; if,DARKCYAN               ;; keyword,colour e.g. for,(GREEN,YELLOW,UNDERLINE)
+;; .END                      ;; End of list of keywords     
+;;                           ;; Keywords longer than 1 character are assumed to 
+;;                           ;; be delimited by non-alphanumeric characters. 
+;;                           ;; Imbedded blanks are significant. If the language 
+;;                           ;; is not case sensitive then the keywords should be
+;;                           ;; specified in upper case ! Only the text part
+;;                           ;; (not comments or strings) of the record 
+;;                           ;; is scanned for keywords.
+;;
+[A37]
+Case=Yes                     ;; The language is case sensitive    
+Language=A37                 ;; The language structure is 370 assembler
+Comment="* .*    "           ;; start and end character pairs    
+CommentPos=1                 ;; The comment is fixed in column one
+String="'   '   "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+DFHSTACK,(COLOUR3,COLOUR7,UNDERLINE)
+USING,(RED,CYAN,UNDERLINE)
+DROP,(,RED)
+SPACE,(PALEGRAY,COLOUR1)
+(,(BLACK,DEFAULT,)
+),(BLACK,DEFAULT,)
+LTORG ,(,,UNDERLINE)
+POP ,GREEN    
+.END
+;;
+[C]                            
+Case=Yes                     ;; The language is case sensitive    
+Language=C                   ;; The language structure is the C language 
+CommentPos=0                 ;; No specific comment column
+Comment="/*//*/  "           ;; start and end character pairs
+String="" ' " ' ",\          ;; start and end character pairs     
+Tab=8,16,24,36,42,72         ;; four tab positions
+Keywords                     ;; The following is a list of keywords
+else,(DARKPINK,,UNDERLINE)   ;; c language keywords 
+if,(DARKPINK,,UNDERLINE)
+while,(CYAN,DARKBLUE,UNDERLINE)
+for,(CYAN,DARKBLUE,UNDERLINE)
+do,(CYAN,DARKBLUE,UNDERLINE)
+switch,(CYAN,DARKBLUE,UNDERLINE)
+case,(DARKPINK,,UNDERLINE)
+goto,(RED,YELLOW)
+break,BROWN
+continue,BROWN
+return,BROWN
+int ,(DARKGREEN)
+char ,(DARKGREEN)
+const ,(DARKGREEN)
+default ,(DARKGREEN)
+extern ,(DARKGREEN)
+long ,(DARKGREEN)
+short ,(DARKGREEN)
+unsigned ,(DARKGREEN)
+signed ,(DARKGREEN)
+static ,(DARKGREEN)
+typedef ,(DARKGREEN)
+void ,(DARKGREEN)
+#define,(BLACK)
+#pragma,(BLACK,,UNDERLINE)
+#include,(BLACK)
+#ifdef,(BLACK)
+#endif,(BLACK)
+#ifndef,(BLACK)
+#else,(BLACK)
+#elif,(BLACK)
+#if,(BLACK)
+#undef,(BLACK)
+struct ,(DARKGREEN)
+union ,DARKGREEN
+{,DARKGREEN
+},DARKGREEN
+(,BLACK
+),BLACK
+!,DARKRED
+;,DARKRED
+.END                         ;; end of keyword list        
+;;
+[JAVA]
+Case=Yes                     ;; The language is case sensitive
+Language=C                   ;; The language structure is the C language
+CommentPos=0                 ;; No specific comment column
+Comment="/*//*/  "           ;; start and end character pairs
+String="" ' " ' ",\          ;; start and end character pairs
+Tab=4,8,12,36,42,72          ;; six field tab positions
+Keywords                     ;; The following is a list of keywords
+else,(BLACK,,UNDERLINE)      ;; JAVA language keywords
+if,(BLACK,,UNDERLINE)
+while,(BLACK,,UNDERLINE)
+for,(BLACK,,UNDERLINE)
+do,(BLACK,,UNDERLINE)
+switch,(BLACK,,UNDERLINE)
+case,(BLACK,,UNDERLINE)
+break,(BLACK,,UNDERLINE)
+continue,(BLACK,,UNDERLINE)
+return,(BLACK,,UNDERLINE)
+int,(BLACK,,UNDERLINE)
+try,(BLACK,,UNDERLINE)
+new,(BLACK,,UNDERLINE)
+final,(BLACK,,UNDERLINE)
+catch,(BLACK,,UNDERLINE)
+public,(BLACK,,UNDERLINE)
+private,(BLACK,,UNDERLINE)
+char,(BLACK,,UNDERLINE)
+const,(BLACK,,UNDERLINE)
+default,(BLACK,,UNDERLINE)
+extern,(BLACK,,UNDERLINE)
+long,(BLACK,,UNDERLINE)
+short,(BLACK,,UNDERLINE)
+static,(BLACK,,UNDERLINE)
+void,(BLACK,,UNDERLINE)
+.END                         ;; end of keyword list
+;;
+[ASM]
+Case=No                      ;; keywords should be specified in upper case
+Comment=";       "           ;; start and end character pairs
+Language=ASM                 ;; The language structure MASM
+String="" ' " ' "            ;; start and end character pairs     
+Tab=10,16,36,42              ;; four tab positions
+Keywords                     ;; The following is a list of keywords
+PROC ,CYAN
+ENTER ,PINK
+LEAVE,PINK
+RET,BROWN
+SEGMENT ,CYAN
+CALL ,PINK
+STRUCT ,DARKGREEN
+PUBLIC ,DARKGREEN
+[,BLACK
+],BLACK
+.END                         ;; end of keyword list      
+;;
+[PAS]
+Case=No                      ;; keywords should be specified in upper case
+Comment="{ (*} *)"           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String="" ' " ' "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+PROCEDURE ,CYAN
+FUNCTION ,CYAN
+DO,DARKCYAN
+BEGIN,(DARKCYAN,,UNDERLINE)
+END,DARKCYAN
+FOR,CYAN
+REPEAT,CYAN
+UNTIL,CYAN
+WHILE,CYAN
+CASE,CYAN
+IF,DARKPINK
+THEN,DARKPINK
+ELSE,DARKPINK
+GOTO,BROWN
+OR,BLACK
+AND,BLACK
+RETURN,BROWN
+BREAK,BROWN
+CYCLE,BROWN
+VAR,DARKGREEN
+TYPE,DARKGREEN
+(,BLACK
+),BLACK
+.END                         ;; end of keyword list
+;;
+[FOR]
+Case=Yes                     ;; keywords should be specified in upper case
+Comment="C       "           ;; start and end character pairs 
+CommentPos=1                 ;; Comment fixed in column one
+Language=FORTRAN             ;; The language structure is FORTRAN
+String="" ' " ' "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+SUBROUTINE ,(PINK,YELLOW,UNDERLINE)
+FUNCTION ,PINK
+RETURN ,BROWN
+GO TO ,(BROWN,GREEN)
+CALL ,PINK
+STOP,RED
+END,BLACK
+DO ,DARKGREEN
+CONTINUE ,DARKGREEN   
+.END
+[IPF]
+Case=No                      ;; keywords should be specified in upper case 
+CommentPos=1                 ;; Comment fixed in column one
+Comment=".*      "           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String="" ' " ' "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+:,(BLACK,RED,)      
+:H1,(YELLOW,BLACK,)  
+:H2,(DARKRED,DEFAULT,)  
+LINK,(GREEN,BLACK,)     
+ELINK,(GREEN,BLACK,)    
+.END
+;;    
+[ADA]
+Case=No                      ;; Case insensitive 
+CommentPos=0                 ;; No fixed comment position 
+Comment="--      "           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String="" ' " ' "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+PROCEDURE ,CYAN
+FUNCTION ,CYAN
+DECLARE ,PINK
+DELAY,GREEN
+SUBTYPE ,PINK
+RANGE ,PINK
+CASE ,PINK
+SELECT,DARKPINK
+RECORD ,PINK
+BEGIN,DARKCYAN
+DO,DARKCYAN
+END LOOP,CYAN
+END IF,DARKRED
+END CASE,PINK
+END SELECT,DARKPINK
+END RECORD,PINK
+END,DARKCYAN
+ELSIF,DARKRED
+ELSE,DARKRED
+IF,DARKRED
+WHEN OTHERS ,DARKGREEN
+WHEN ,CYAN
+WITH ,DARKRED
+FOR ,CYAN
+LOOP ,CYAN
+RETURN ,BROWN
+EXIT WHEN ,BROWN
+EXIT,BROWN
+GOTO ,BROWN
+PRIVATE ,DARKRED
+TYPE ,DARKRED
+GENERIC ,DARKRED  
+IS,BROWN
+OR,BROWN 
+.END
+;; 
+[PLS]                        ;; Not a case sensitive language
+Case=No                      ;; keywords should be specified in upper case 
+CommentPos=0                 ;; no fixed comment position
+Comment="/*! */  "           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String="" ' " ' "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+PROC,CYAN
+DCL,BLACK
+BEGIN,DARKCYAN
+END,DARKCYAN
+DO,DARKCYAN
+IF,DARKPINK
+THEN,DARKPINK
+ELSE,DARKPINK
+SELECT,CYAN
+WHEN,CYAN
+OTHERWISE,DARKRED
+UNTIL,CYAN
+WHILE,CYAN
+RETURN,BROWN
+GOTO,BROWN
+GO TO,BROWN
+RETURN,BROWN
+LEAVE,BROWN
+CALL,PINK
+PROCEDURE,CYAN
+DECLARE,BLACK
+GENERATE,DARKCYAN
+@ENDGEN,DARKCYAN
+RESPECIFY,DARKRED
+RFY,DARKRED
+(,BLACK
+),BLACK
+.END
+;;
+[CMD]                        ;; REXX
+Case=No                      ;; keywords should be specified in upper case 
+CommentPos=0                 ;; no fixed comment position
+Comment="/*  */  "           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String="" ' " ' "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+SAY ,DARKCYAN
+PULL ,DARKCYAN
+PARSE ,DARKCYAN
+EXIT ,DARKCYAN
+END,DARKCYAN
+DO ,DARKCYAN
+IF ,DARKPINK
+THEN ,DARKPINK
+ELSE ,DARKPINK
+SELECT,CYAN
+WHEN,CYAN
+UNTIL,CYAN
+WHILE,CYAN
+RETURN,BROWN
+GOTO ,BROWN
+LEAVE,BROWN
+CALL ,PINK
+.END
+;;
+[PRF]                        ;; Alpha profile
+Case=Yes                     ;; keywords should be specified in upper case 
+CommentPos=0                 ;; no fixed comment position
+Comment=";;      "           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String="        "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+Case,(DARKGREEN,WHITE,UNDERLINE)     
+CommentPos,(DARKGREEN,WHITE,UNDERLINE)  
+Language,(DARKGREEN,WHITE,UNDERLINE)   
+Comment,(DARKGREEN,WHITE,UNDERLINE)   
+String,(DARKGREEN,WHITE,UNDERLINE)       
+Keywords,(DARKGREEN,WHITE,UNDERLINE)   
+Extension,(DARKGREEN,WHITE,UNDERLINE)   
+Operator,(DARKGREEN,WHITE,UNDERLINE)   
+Tab,(DARKGREEN,WHITE,UNDERLINE)    
+TransferPgm,(DARKGREEN,WHITE,UNDERLINE)    
+[,(BROWN,WHITE,)  
+],(BROWN,WHITE,)     
+* ,(RED,WHITE,)    
+.END,(DARKRED,WHITE,UNDERLINE)  
+;;
+[COB]                        ;; Cobol
+Case=No                      ;; keywords should be specified in upper case 
+CommentPos=7                 ;; Comment fixed in column one
+Comment="* /     "           ;; start and end character pairs
+Language=default             ;; The language structure is the default (Algol)
+String=""   "   "            ;; start and end character pairs     
+Keywords                     ;; The following is a list of keywords
+CALL,DARKRED
+USING,BLACK
+CONTENT,(DARKBLUE,YELLOW,UNDERLINE)
+END-CALL,DARKRED    
+PROCEDURE,(WHITE,RED)
+CLOSE,BLACK
+OPEN,(BLACK,,UNDERLINE)
+.END
+;;
+;; Operator - defines the operator keywords for each language.
+;; The second value indicates how to process the keyword, viz.
+;; < or > indicate the scan direction from the keyword to locate the label,
+;; P or C indicates that the keyword specifies an entry point or call,
+;; : indicates that the label will be followed by a colon,
+;; 2 indicates that the second label following a , is to be used.
+;; An indefinite number of entries may be defined as follows :-
+;; file_type,<³>C³P[:][2],keyword
+;; and are terminated by '.END', invalid entries are ignored.
+;; The keywords must be <=12 characters. 
+Operator
+A37,>C,CALL
+A37,>C2,BAS
+A37,>C2,BAL
+A37,>C2,DFHSTACK
+ASM,>C,CALL
+ASM,<P,PROC
+PAS,>P,PROCEDURE
+PAS,>P,FUNCTION
+PAS,>P,procedure
+PAS,>P,function
+PLS,<P:,PROC
+PLS,<P:,proc
+PLS,<P:,IPROC
+PLS,>C,CALL
+PLS,>C,call
+FOR,>P,SUBROUTINE
+FOR,>P,FUNCTION
+FOR,>C,CALL    
+ADA,>P,procedure
+.END 
+;;  
+;; The following functions may be reassigned to alternate   
+;; keys; Ctrl+a or Ctrl+Shift+A are the only valid values :-
+;; 
+Keys                           ;; Accelerator keys
+Backout=Ctrl+z                 ;; Backout
+BoxLine=Ctrl+l                 ;; Toggle Box/Line mode select
+Bracket=Ctrl+m                 ;; Match brackets
+Calculator=Ctrl+k              ;; Invoke calculator
+CommentSup=Ctrl+Shift+H        ;; Suppress comments
+Compare=Ctrl+Shift+F           ;; Compare files
+Compile=Ctrl+c                 ;; Compile
+ConvertCase=Ctrl+u             ;; Convert to/from upper/lower case
+DisAsm=Ctrl+d                  ;; Disassemble EXE & DLL
+Edit=Ctrl+Shift+E              ;; Edit line
+Expand=Ctrl+e                  ;; Expand label
+Hex=Ctrl+h                     ;; Display original file in Hex
+Highlight=Ctrl+i               ;; Highlight label under cursor
+HighlightSup=Ctrl+y            ;; Suppress highlighted lines
+LocateHigh=Ctrl+Shift+I        ;; Make locate argument of highlighted label
+Playback=Ctrl+p                ;; Playback
+Record=Ctrl+r                  ;; Record
+SaveFile=Ctrl+Shift+S          ;; Save File
+Search=Ctrl+g                  ;; Search directories
+Structure=Ctrl+s               ;; Display structure
+XREF=Ctrl+x                    ;; Search children for strings
+.END                           ;;  
+;;
+;; TransferPgm specifies the programme name invoked from the Allocate menu
+;; default ALMCOPY
+TransferPgm="ALMCOPY"
+;;
+;; End of profile for ALPHA programme

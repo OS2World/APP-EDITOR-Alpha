@@ -1,0 +1,90 @@
+   ##################################################################
+   # (C) Copyright International Business Machines Corporation 1993.#
+   #                   All rights Reserved.                         #
+   ##################################################################
+
+Alpha                                                                
+Version:  3.1, 97/07/27                                              
+                                                                     
+Alpha is a simple 32-bit, multi-document, configurable, highlighting and
+analysing editor for 370 and 386 assembler, PASCAL, C, PL/X, FORTRAN,                                 
+and related languages.                     
+         
+Recent changes to the ALPHA package.
+==================================== 
+1) Separate threads to read Compiler output & search directory.                      
+2) Improved bracket matching.
+3) Adobe Type 1 fixed pitch font with hexadecimal and alphanumeric characters.
+4) Ctrl+e - expand label.            
+   Note:- Change from mouse button 1 double click, 
+   and the 'Elephant' button now expands the highlighted label !
+5) Mouse button 1 double click - isolate string (+Shift select).
+6) Mouse button 1 click +Shift extend select area.
+7) Set Tab interval from the Preference page of the Configure note book.
+8) Alt+arrow keys to move block.     
+9) Keys - Profile entry to assign functions to keyboard keys.
+10) The profile name is set from 'Configure' 'Preferences' 'page 2'.
+11) Simple calculator.
+12) 22x22 and 32x32 bitmaps for tool bar.
+13) Move the select area by dragging the mouse with button 1 down.
+                                                          
+Features:                                                            
+  -  Provides basic browse/edit functions.                           
+   + Copy, cut and paste.
+   + Box mode {column mode} select as well as line mode.
+   + Special character insert for diagrams etc..  
+   + Display characters at the current cursor position in Hex. 
+  -  Invokes the appropriate compiler.                               
+  -  Cross-references labels.                                        
+  -  Searches files in a directory for a string.                     
+  -  Displays the program call structure.                            
+  -  Highlights keywords, comments etc..                                            
+  -  Suppression of selected lines.    
+  -  Suppresses comments.                                            
+  -  Matches BEGIN/END pairs.  
+  -  Record/playback keystrokes.                                    
+  -  Expands the procedure call in a secondary window.               
+  -  Search of compiler include paths.
+  -  Conversion to upper or lower case.
+  -  Clearing selected areas to blanks.
+  -  Tab expansion.
+  -  Customization for highlighting and language support.            
+  -  Bookmark support.
+  -  Analyse 32-bit ".EXE" and ".DLL" files and dis-assemble the code object.   
+  -  Display a file in hexadecimal and characters.
+  -  Automatically save a file after n changes.
+  -  Automatically indent new lines.
+  -  Compare two files and create a composite file.
+  -  Edit/analyse an arbitrary number of files at a time. 
+                                                                     
+This version of Alpha was written in C Set/2 and MASM Version 6.0.   
+                                                                     
+Hardware and Software Requirements:                                  
+  -  OS/2 2.0 or later                                               
+                           
+files :-
+
+LICENSE TXT  - Licence agreement
+ALPHA.ABS    - This file - Abstract
+
+ALPHA.EXE    - The programme (32 Bit) for OS/2 V2.x, V3.x.
+ALPHA.TXT    - ASCII text description of ALPHA.
+ALPHA.PS     - POSTSCRIPT description of ALPHA.
+ALPHA.PRF    - Sample profile for use with ALPHA.                     
+ALPHA.FON    - Alpha fixed pitch fonts (8,9,10,11,16,20).             
+ALPHAA__.AFM - }
+ALPHAA__.PFB - } Alphaa - Adobe Type 1 fixed pitch font.
+ALPHAA__.PFM - }
+ALPHA.HLP    - Extended Help file for Alpha programme.     
+ALPHA.INF    - Description of Alpha - use VIEW.                                           
+ALPHA1.H     - Alpha definitions to compile ALPHAE.C                 
+ALPHAE.C     - Sample parse exit DLL for ALPHA.                                                      
+ALPHAE.DEF   - Definition file to create DLL exit for ALPHA 
+                                          
+Author:  Lionel de Lambert                                           
+{Internet-LIONEL@VNET.IBM.COM}
+ 
+
+
+
+

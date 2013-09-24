@@ -1,0 +1,16 @@
+;========================================================================
+; ALPHAE.DEF - DLL Sample program dynamic linking library definition file
+;========================================================================
+LIBRARY     ALPHAE
+
+DESCRIPTION 'Alpha V3.1 Dynamic Link Library - Lionel de Lambert - Jul94'
+
+PROTMODE
+
+DATA        MULTIPLE READWRITE LOADONCALL
+
+CODE        LOADONCALL
+
+EXPORTS     Alpha_parse_exit
+          
+

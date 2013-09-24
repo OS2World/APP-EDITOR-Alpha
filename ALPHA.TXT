@@ -1,0 +1,1013 @@
+
+    *******************************************************************
+    *                                                                 *
+    * (C) Copyright International Business Machines Corporation 1993. *
+    *                 All rights Reserved.                            *
+    *                                                                 *
+    *******************************************************************
+
+
+
+
+
+
+                           ALPHA V3.1
+
+             Lionel de Lambert - Iunius MMDCCXLIII AUC
+
+                IBM United Kingdom Laboratories Ltd.
+
+                          06 August 1997
+
+
+
+
+
+
+This document describes the installation, function and commands
+of the ALPHA software analysis programme which runs under
+the OS/2 v2.0 or later operating system. 
+
+The languages supported are :-
+
+370 and 386 assembler, PASCAL(Ada), PL/X(PL/I, REXX), C(C++), and
+FORTRAN.
+
+
+Description
+===========
+This is a simple 32-bit, configurable, multi-document, highlighting editor
+version of the alpha software analysis programmes which were written
+together with the CMS programme ANALYSE in order to establish the praecognita 
+for the CICS restructure project and may be of interest to those people who
+examine 370, 386 assembler, PASCAL(Ada), PL/X(PL/I, REXX), C(C++),
+FORTRAN etc. under OS/2 V2.0 or later. 
+
+
+
+This programme will provide basic browse and edit functions for all files
+with arbitrarily long records, {records >= 256 will be split for display
+and rejoined when saved} as well as highlighting specified
+keywords for language files such as 370 & 386 Assemble, PASCAL,
+PL/AS, C(CPP), FORTRAN etc. ALPHA will also display the programme
+call structure, and expand the procedure calls in a secondary
+window.
+
+This version of Alpha was written in C-Set/2 and MASM V6.0 and will run
+on OS/2 V2.0 or later.
+
+
+
+Highlighting of keywords has been provided for the following
+language types :-  A37,ASM,PAS,(PLS,PLX,PLI),(C,CPP,H),FOR,IPF.PRF
+[Other languages may be defined].
+
+
+The syntax of the Alpha programme is :-
+
+
+
+   START ALPHA [file] [file] .. [/p [profile name - default ALPHA.PRF]]
+
+
+
+The Extension, Case, CommentPos, Language, Comment, String, 
+and TransferPgm(1) are the only ones which are recognised from the profile.
+{The file name may contain a wild character, e.g. '*'.}
+
+
+
+Installation
+============
+The minimum requirement is to copy the file ALPHA.EXE to a
+directory under OS/2 v2.x. If you want to access the Extended
+help you must copy the file ALPHA.HLP in to the HELP path. If
+you wish to use the Alpha fonts you should copy the files
+ALPHA.FON, 'ALPHAA__.AFM', 'ALPHAA__.PFB', and 'ALPHAA__.PFM'
+to a directory under OS/2 v2.x and select 'System Setup'
+from 'OS/2 System' and use 'Add' in the 'Edit font' of  the
+'Font Palette'. If you wish to access files from the host then
+you should also install a file transfer programme such as
+ALMCOPY.
+
+ 
+Features
+========
+This version of Alpha provides the following features :-
+          
+ - Basic browse and edit functions. 
+   + Copy, cut and paste.
+   + Box mode {column mode} select as well as line mode.
+   + Special character insert for diagrams etc..   
+   + Display characters at the current cursor position in 
+     Hex and instructions.   
+ - Invokes the appropriate compiler.
+ - Cross-references labels.                                        
+ - Searches files in a directory for a string.                     
+ - Displays the program call structure.                            
+ - Highlights keywords, comments etc..                                            
+ - Suppression of selected lines.    
+ - Suppression of comments.   
+ - Matches BEGIN/END pairs.                                        
+ - Record/playback key strokes.                                    
+ - Expands the procedure call in a secondary window. 
+ - Search of compiler include paths.
+ - Conversion to upper or lower case.
+ - Clearing selected areas to blanks.
+ - Tab expansion.
+ - Customization for highlighting and language support.            
+ - Bookmark support.
+ - Analyse 32-bit ".EXE" and ".DLL" files and dis-assemble the code object.
+ - Display a file in hexadecimal and characters.
+ - Automatically save a file after n changes.
+ - Automatically indent new lines.
+ - Compare two files and create a composite file.
+ - Edit/analyse an arbitrary number of files at a time with 
+   arbitrary record size. 
+ - A simple Hex/Dec. calculator.
+
+ 
+Menu  
+====
+The Allocate dialogue box is used to request a file to be read,
+or create a new file. The Create button uses the contents of the Combo box
+to set the default file name when creating a new file.    
+The SetDir button will set the current directory from the Combo box.
+If the drive letter is changed then the OK button should be used
+to refresh the List boxes. A file may also be allocated by
+dragging mouse button 2 with the Ctrl key pressed from a Drives
+window and releasing it over the Alpha window. {The maximum
+number of child windows is limited to the storage available.
+If the file size is greater than 8Mbytes then a prompt will 
+be issued to allow a part of the file to be read.}
+
+The Transfer button will pass the contents of the Combo box to the
+Transfer_pgm. 
+
+The Command dialogue box(2) may be used to issue a search command
+e.g.
+
+
+Non-case sensitive search for a string.
+
+Case sensitive search for a string.
+
+Case sensitive search for a string in column one.
+{Specify a pattern character (wild) e.g. 'TCT*EI' as  a search
+ argument for a forward search and specify '*' in the 
+ 'Pattern Chr.' entry box.}
+
+Set the search mode to backwards.
+
+(The string search starts from the current cursor position +1.)
+
+Move to a specified line number.
+
+Replace the text at the current cursor position with the text from
+     the Replacement Text Entry Box.
+
+Replace all - repeat to end-of-file replacing the
+     text at the current cursor position with the text from
+     the Replacement Text Entry Box and locate the next string.
+
+Options
+=======
+The Options menu may be used to set the following options :-
+
+ Status bar - display the status bar at the base of the main window.
+
+ Tab - expand the record by using X'09' characters to round to
+       columns n*(Tab interval).
+                        
+ Line No. - display the line No. at the left of the record. 
+ Keyword - highlight the keywords.
+
+ Include - For the file types of MASM, PASCAL, PL/S {PL/I etc.}
+        and C read the include files specified by :-
+
+        include file_name, {$INCLUDE : 'file_name' }, %INCLUDE
+        first_part_of_file_name;, #include <file_name>, respectively
+        when expanding a call etc.
+
+        {The current directory together with the paths defined by the
+        INCLUDE environment variable will be searched. The total number
+        of open files/windows is limited to the available storage
+        so the include nesting level is limited to the storage of the
+        machine.  For language 4, PL/S, the file extension is appended
+        to the first_part_of_file_name.}
+
+Grid - Draw vertical grid lines through every tenth character in
+       the Grid colour and flag lines greater than 80 characters long. 
+       Records greater than 256 characters, continued, will be flagged 
+       with the highlight colour. 
+
+Box - Switch the select mode to box format. In box mode the "Paste" function 
+      will overwrite the text at the cursor position with the box area.
+ 
+Tool bar - Display the "Tool bar"; which makes toggling of some options
+         easy.
+
+Configure
+=========
+This will invoke the Configure notebook with the following pages :-
+C - Colour - Set the text colour
+F - Font - Set the text font.      
+P - Preferences - Set the autosave values.
+T - Configure the Tool bar.
+
+
+Font
+----
+The Font  dialogue box may be used to change and remember the
+font of the text, comments etc.
+
+You can use the System Monospaced, Helvetica, Roman and Courier
+fonts but the Courier, System VIO and the System Monospaced fonts are the
+only monospaced fonts supplied with OS/2 V2.x. A monospaced font
+with point sizes 8,9,10,11,16 & 20 is supplied with the ALPHA
+PACKAGE, which may also be used. 
+Outline fonts are not selectable.
+
+
+
+Point sizes (1/72") are :- Courier
+(8,10,12), Roman (8,10,12,14,18,24), Helvetica
+(8,10,12,14,18,24), System (8,10,12, {8x8, 8x16,9x20}), "Alpha"
+(8{8x12},9{9x10},10{8x14},11{11x12},16{12x16},20{12x20}). The
+Alpha font point size 10 is suitable for 8513 screens and the
+point size 20 for 8515/8516. 
+
+
+Colour
+------
+The Colour dialogue box may be used to change and remember the
+colours(3) of the text, comments etc. The following colours may be
+changed with this dialogue box :-
+
+1) Text - The main text colour and
+   Structure List box calls.
+2) Comment - The Comment colour.  
+3) Select - The mouse button 1 drag area text colour.
+4) String - The string text colour.
+5) Highlight - The mouse button 1 isolate keyword colour and the 
+   Structure List box
+   procedures.    
+6) Highlight1 - The first mouse button 1 isolate keyword colour
+   from the Popup menu.
+7) Highlight2:ehp1. - The second mouse button 1 isolate keyword colour
+   from the Popup menu.
+8) Locate - The mouse button 2 locate string. 
+9) Branch - The Branch/Jump instruction colour.
+10) Grid - The vertical grid line colour.
+11) Help balloon - The Tool bar   
+   Help balloon background colour.
+12) Line number - The colour for line numbers. 
+13) Modified - The text of modified lines.
+14) File one - The unique text of the first file compared. 
+15) File two - The unique text of the second file compared. 
+16) Indent area - The background colour of the line indent
+   area before the record.
+ 
+The Foreground radio button should be checked to set the 
+foreground colour.
+The Background radio button should be checked to set the 
+background colour.  
+The Underline check box should be set to specify the underline
+font.                                           
+
+The values for COLOUR1 etc. are set by selecting the colour
+and adjusting the sliders. The value is remembered when the Set
+button is pressed.  
+The sliders are active for the particular COLOURn selected.      
+                                 
+
+Preferences
+-----------
+Set the autosave values for backing up the files.
+ 
+ - The 'Autosave extension' entry box
+   specifies the file extension for the automatic save of files.
+ - The 'No. changes before autosave' entry box 
+   specifies number of changes to be made to a file before the backup file
+   is written.         
+ - The Maximum backout level specifies the maximum number of changes
+   which may be backed out. Memory is reserved for each backout level,
+   and some operations require two backout actions.  
+ - The Cursor width specifies the width of the insert
+   cursor. The default is 0 which uses SV_CYBORDER.   
+ - The Indent area width specifies the indent area size on the left of the
+   record. If <6 then (Character width)*2/3 is used. 
+ - The Default language entry box specifies the language extension
+   to be assumed if the file does not have an extension.
+ - The Default extension entry box specifies the language extension
+   to be assumed if the file has an extension but it has not been
+   specified in File_type.          
+ - The Tab interval entry box may be used to change the tab spacing value.
+ - The Automatic indent check box will cause the cursor to be set to the
+   character position of the start of the previous line when a new line
+   character is entered past the end of the text.
+ - The Insert tabs check box will cause the tab key to insert tab characters
+   rather than a sequence of spaces.
+ - The Move select area check box will allow a select area to be moved by
+   dragging the mouse with button 1 down. 
+ - The Bookmark text check box will cause a prompt for text to be
+   associated with the bookmark number when Alt+n is pressed, the default
+   is the line number. 
+ - The Read line break will specify how the file
+   will be broken into records; by examining the first record (auto),
+   by carriage return line feed, line feed or by record size.  
+ - The Save line break will specify how the file records
+   will be written back; by appending
+   carriage return line feed, line feed or by record size.  
+ - The 'Edit' button will edit the Profile and remember it 
+   as the profile for subsequent invocations. This will obviate the need
+   for the '/p' option and allow the dropping of files on the
+   unstarted programme. A null file name will remove the saved profile name. 
+ - The 'Set' button will accept the values and save them in OS2.INI
+   except for the line break values.
+ - The 'Cancel' button will dismiss the notebook without
+   saving the changes.
+ 
+Configure Tool bar
+------------------
+This Dialogue box may be used to Delete or Add buttons to the Tool bar
+and to change its size and orientation.
+
+ - The Buttons List box contains the available buttons; one should be 
+   selected and the Add button pressed to add it to the Tool bar.
+ - The Tool bar List box shows the current list of buttons in the 
+   Tool bar; one should be selected and the Delete
+   button pressed to remove it.
+ - The Entry box displays the current button size which may be changed.
+   Three bitmap sizes are provided, viz. 
+   22x22, 32x32 and 64x64; intermediate
+   values are created by stretching the bitmap.  
+   After setting the size Alpha should be restarted to load the 
+   correct bitmaps.
+ - The Horizontal and vertical Radio buttons will read the Entry box
+   and reconstruct the Tool bar.
+ - The menu Radio button will cause the Tool bar to be placed in the menu
+   when Alpha is restarted. 
+ - The Configure button will cause the changes to be applied.
+
+The new Tool bar structure will be remembered when the Configure button
+is pressed. If the Tool bar is changed from menu to floating then 
+Alpha should be closed and restarted.
+
+
+The Print menu item may be used to print the whole file or a 
+selected range of records either unformatted (Print) or  
+formatted to a printer. The unformatted text may be written to 
+one of :- LPT1, LPT2, LPT3. If a range of records has been 
+selected by dragging the mouse with button one down then this 
+range will be used in the print dialogue box. The default record 
+range is the whole file. The formatted option allows the printer 
+font to be selected and the printer to be set up for printing the 
+coloured highlighted text to a selected printer.  
+For formatted printing invoke the Setup option before the Print.
+
+The Window menu may be used to close all child windows or to
+arrange them so that the title text is visible, Cascade, or so
+that a partial view of each child may be seen, Tile. The Select
+window option will create a dialogue box from which a child
+window may be selected to become the active widow. The first sixteen
+windows may be selected by file name from this menu.
+
+The Edit dialogue box may be used to edit the current line :-     
+    ----
+
+ - The Multi-Line Entry box may be used to modify the current line
+   or add new lines. The number of lines added is the No. 
+   of lines in the MLE.
+ - The Modify button will replace the current line
+   with the contents of the MLE.
+ - The Undo button will undo the changes to the MLE.
+ - The Cancel button will leave the current line unchanged.
+ - The number on the left shows
+   the current cursor position in the MLE.
+ - The number on the right shows
+   the current pointer, mouse, position in the MLE.
+
+The current line is the top line in the window unless button 1 has
+been pressed when the cursor will indicate the line.
+
+If major modifications,
+{The Multi-line Entry field will only accept 64 lines at a time}, 
+are to be made to the file then a purpose built editor should be used.
+The records >= 256 characters will be split for display and
+rejoined when saved.
+
+The Select character character dialogue box
+    ----------------  
+will allow one of the 256 characters from
+the current font to be inserted at the current cursor position. 
+Select one character by pressing mouse button 1 on the required
+character of the array. Use the System menu to dismiss the dialogue
+box.  
+This may be used to draw diagrams etc.
+ 
+    ÉÍÍËÍÍ» 
+    ÌËÍÎÍÍ¹ 
+    ÌÎÍÎÍÍ¹ 
+    ÈÊÍÊÍÍ¼ 
+ 
+The Calculator dialogue box
+    ----------
+is a simple hexadecimal/decimal calculator.
+Acc - The accumulator - answer.
+Mem - The memory value.
+Ent - The current entry value.
+CA - Clear accumulator.
+CE - Clear entry field.
+CM - Clear memory.
+MR - Recall memory value to entry field.
+Min - Copy entry value to memory.
+= - Copy entry value to accumulator.
+- - Subtract entry value from accumulator.
++ - Add entry value to accumulator.
+* - Multiply accumulator by entry value.
+/ - Divide accumulator be entry value. 
+
+Help                                                       
+----
+The Help menu may be used to display the About window, the Help
+summary window or access the OS/2 help file ALPHA.HLP(5).
+
+The Help summary window may be scrolled by :-
+
+Page_up - scroll up 1 screen
+
+Page_down - scroll down 1 screen 
+
+Home - scroll to the top of the Help data 
+
+End - scroll to the end of the Help data 
+
+Up_arrow - scroll up 1 line. 
+
+Down_arrow  - scroll down 1 line.
+
+Mouse buttons
+-------------
+1) Mouse button 1
+ a) single click    
+  i) No other key pressed  
+    - Outside a select area set the cursor position and repaint window.
+    - Within the select area move the select area by dragging the mouse
+      with button 1 down.                                         
+  ii) With Ctrl key down  
+     A Pop-up menu will be displayed which will allow either, 
+     the string to be highlighted 
+     (alternate highlight colours Highlight1 or Highlight2),
+     the next five instructions 
+     to be displayed, the highlighted label to be expanded,  
+     set the grid column using the grid background colour,
+     the record to be marked as continued from the previous,
+     display the Select character or Edit dialogue box. 
+  iii) With Shift key down
+     Extend the current select area to the new cursor (mouse) position.
+ b) Double click
+  i) No other key pressed  
+    Highlight the string under the cursor and select the string.  
+    If mouse button 1 is clicked twice on BEGIN for PASCAL, {  for C
+    or DO for PL/S then the following records up to the matching END
+    etc. will not be displayed. 
+    If the mouse button 1 is double
+    clicked on the suppressed message line or F12 is pressed then
+    the records will be re-displayed. If the Include option is
+    effective and mouse button 1 is double clicked on an Include
+    statement then a second window containing the include file will
+    be created.    
+  ii) Before start of record will select whole line.
+  iii) With Shift key down 
+    Only make the string highlighted.
+ 
+2) Mouse button 2
+ a) single click    
+  i) No other key pressed  
+    Will cause a case sensitive search for this string from the 
+    current cursor position +1. The direction is set from the
+    Command dialogue box.
+  ii) With Ctrl key down 
+     Will cause a non-case sensitive search for this string from the 
+     current cursor position +1
+  iii) With Shift key down
+     A search from  
+     the top of the file is made for the label definition or procedure 
+     entry and a secondary window is opened, Expand.
+     {The language structure tables are searched first so if you have
+      specified some structure keywords via. Language_operator then
+      you will have to record the structure first, Ctrl+s.}
+
+If mouse button 1 is held down whilst the mouse is dragged to the bottom
+or top of the window the area will be shaded
+in the Select area colour.   
+A complete line will be selected if the start position precedes the first
+character of a line and the end position precedes the start of the 
+following line. 
+The highlighted area may then be deleted, copied to the Clipboard etc.. 
+If the mouse pointer is held at the bottom or top
+of the screen then the window will scroll until the mouse button
+is released or the pointer moved back within the window.
+
+
+The following keys are effective for the programme -
+              ----
+F1 will open the Help window. 
+
+F2 will open the Configure Notebook. 
+
+F3 will close the programme. 
+
+F4 will open the Allocate file dialogue box.
+
+F5 will repeat the previous command. 
+
+F6 will open the Command dialogue box. 
+
+F7 will scroll the window up 1/2 a screen.       
+
+F7+Shift will scroll the window left 1/2 a screen. 
+
+F8 will scroll the window down 1/2 a screen.     
+
+F8+Shift will scroll the window right 1/2 a screen. 
+ 
+F12 will reset the collapse of the BEGIN/END pairs etc.
+
+F12+Shift will clear the bookmarks.   
+
+Page_Up will scroll up 1 screen. 
+
+Page_Down will scroll down 1 screen. 
+
+The Home+Ctrl key will scroll to the top of the file.
+
+The End+Ctrl key will scroll to the end of the file.
+
+The End key will position the cursor to end of line.   
+
+The Backspace key will delete one character to the left of the cursor.
+
+Up_arrow - scroll up 1 line. 
+ {+Ctrl will scroll to the next bookmark or difference in composite files,
+  +Alt will move a line mode select area block up.} 
+
+Down_arrow - scroll down 1 line.        
+ {+Ctrl will scroll to the next bookmark or difference in composite files,
+  +Alt will move a line mode select area block down.} 
+ 
+Left_arrow - scroll left 1 column.
+{+Alt will move a Box mode select area.} 
+
+Right_arrow - scroll right 1 column.
+{+Alt will move a Box mode select area.} 
+
+(Hold down the Shift key to highlight an area of the window.)
+
+The Tab key will advance the cursor to the next tab position, 
+ (n(Tab interval)).  
+The Tab+Shift keys will reset the cursor to the leftmost 
+position; before the start of the line. 
+The Tab+Ctrl keys will select the next child window,
+
+The Insert key will toggle the Insert/Overwrite 
+mode for character Edit in the Child window at the
+current cursor position.
+
+The Insert+Shift keys will insert the lines from the Clipboard at the
+current cursor position.
+
+The Insert+Ctrl keys will copy the lines highlighted by the
+button(4) 1 drag area from the display to the Clipboard.
+
+The Delete key will delete the character or select area 
+at the current cursor position in the child window.
+
+The Delete+Shift keys will copy the selected area to the Clipboard and 
+delete the text.
+
+The Space+Ctrl keys will clear the selected area to blanks.
+
+The Ctrl+b keys will will restore the previous
+text; may require two operations. 
+
+The Ctrl+Shift+c keys will compile the last active file using the
+command displayed in the Compile dialogue box which will be scanned 
+and 
+ 1) the %  replaced by the full path name from the file entry box.
+ 2) the %e replaced by the file extension.
+ 3) the %n replaced by the file name.
+ 4) the %p replaced by the path name from the file entry box.
+The resultant command will be executed when the Execute button is pressed.
+The Standard Output for the Child process will be
+written to the "Output" MLE.
+The programme name is formed by appending ".EXE" to the first name of
+the command line.
+If the command line is modified then it will be remembered
+when Alpha is closed.   
+The maximum text size for the command is 128 characters. Other programmes
+could be executed e.g. GREP -y -l "%" *.C    
+
+The Ctrl+d keys will create a new child window
+containing the dis-assembled code object of a 32-bit "EXE" or "DLL" 
+file which has an LX header record.
+
+The Ctrl+e keys will expand the highlighted label.
+See Mouse button 2 with Shift key down.
+ 
+The Ctrl+Shift+e keys will edit the current line. The current line will
+be the top line in the window unless button 1 has been pressed when
+the cursor will indicate the the line.
+
+The Ctrl+f keys will compare two files and create a composite file.
+
+The Ctrl+g keys will search the current directory for a string.
+
+The Ctrl+h keys will hide/restore the selected lines. 
+
+The Ctrl+i keys will highlight the keyword at the cursor. 
+
+The Ctrl+Shift+i keys will make a locate argument from the highlighted string. 
+
+The Ctrl+k keys will invoke the calculator.
+
+The Ctrl+l keys will switch to/from Box/line mode select. 
+                                                      
+The Ctrl+m keys will move the cursor to the end matching bracket.
+
+The Ctrl+p keys will playback previously recorded keystrokes.
+
+The Ctrl+r keys will switch on/off recording of keystrokes.
+
+The Ctrl+shift+s keys will save the current file.  
+Select Hexadecimal convert to save the file and translate columns 8-42 
+inclusive from hexadecimal characters. This allows the back translation of 
+the Ctr+z file conversion after modification. Invalid hexadecimal
+characters are ignored, so some degree of free format is possible. 
+The Composite check box will cause a blank, '1' or '2' character
+to precede each line to indicate which lines of a composite file
+are common, belong solely to file 1 or to file 2. This enables
+delta files to be created.
+The file is written to a temporary file '$$$Alpha.tmp'
+which is then renamed. If it is not possible to write out the file
+the original file should still be intact.
+
+The Ctrl+s keys will record or display the programme structure.
+{The programme calling structure will be recorded if this has
+not already been done and then the Structure dialogue box will be displayed.
+If an entry from the List box is selected then the last active 
+window will be scrolled to that line. The Print button may be used 
+to print the contents of the List box on LPT1.  
+The CpyClp button will copy the contents of the list box to the Clipboard.
+The calling structure is based on the profile keywords :- 
+Keywords and Operator.
+If the file contains tab characters then Tab expansion must be active 
+before the structure is recorded.} 
+
+The Ctrl+u will convert the select area to upper or lower case.
+If the first character of the selected area is upper case then the area
+is converted to lower case otherwise the area is converted to upper case.  
+
+The Ctrl+x keys will display the record references to the 
+    highlighted label, XREF.
+
+The Ctrl+z keys will convert the last active 
+    child window to hexadecimal and display as a new window.    
+
+The Ctrl+c keys will suppress/display the comments in a language file.
+    If a single line is scrolled then the comment suppression will 
+    be disabled.
+
+The Alt+n keys will record a bookmark, where n is a numeric key
+0-9.  {These will be displayed when the Grid option is chosen.}
+
+The Ctrl+n keys will move to the bookmark.
+
+Search
+======
+The Search dialogue box may be used to search the current directory for a 
+string. 
+ - The Search argument Entry box specifies the search string, 
+   the default is the highlight string.             
+ - The Search directory Entry box specifies the current directory
+   to be searched. This may be altered to set a new search directory.
+ - The File type Entry box specifies the file extension, 
+   the default is the first extension for the language of the last active 
+   window or 'C'. The files searched are of the type 
+   '*.file_extension' in the current directory.
+ - If the Subdirectories check box 
+   is checked then any directories below the current one
+   will also be searched.
+ - If the Case sensitive check box
+   is checked then the string search will be case sensitive. 
+ - The List box displays the found lines. If one is selected 
+   and the GoTo button pressed then a child window will be created for
+   the file from the current directory. 
+ - The Locate button will search the current directory for the
+   Argument string and fill the List box.        
+ - The CpyClp button will copy the contents of the List box to the Clipboard.
+ - The Cancel button will dismiss the Dialogue box.      
+ - The Case sensitive Check box specifies whether the search is to be
+   case sensitive or not.    
+
+XREF
+====
+The XREF dialogue box may be used to search the records of the last active
+window for a string. 
+ - The Argument Entry box specifies the search string, 
+   the default argument is the 'or' of the highlight strings.
+   The argument may contain several strings separated by a blank,
+   'ª' or '&'; where a blank implies 'or', 'ª' implies not this
+   string and '&' is the logical and, e.g.
+   "SUBRTINE_1 & ª call"
+ - The List box displays the found lines. If one is selected 
+   and the Go to button pressed then the last active child window will be 
+   scrolled to that line.
+ - The Locate button will search the last active child window's records for the
+   Argument string and fill the List box.     
+ - The CpyClp button will copy the contents of the list box to the Clipboard.
+ - The Cancel button will dismiss the Dialogue box.      
+ - The Case sensitive Check box specifies whether the search is to be
+   case sensitive or not.   
+ - The Search all children Check box causes all the data of the children 
+   to be searched.
+ - The Keyword Check box specifies whether the string should be terminated
+   by a non-alphanumeric character. 
+ - The Include records Check box indicates whether the argument string
+   is used to include or exclude records.
+ 
+ 
+Profile
+=======
+A profile(6) may be specified defining the following keyword
+values, these are the only ones recognized by the Alpha programme:-
+
+Extension, Case, CommentPos, Language, Comment, String, Keywords, 
+Operator, Keys and TransferPgm.
+
+Extension specifies the File types to be recognized. The string
+must be <=128 characters and terminated by a comma.
+
+There then follows sections of language definitions starting
+with the file extension extension :- 
+
+ [C]                            
+ Case=Yes                    ;; The language is case sensitive   
+ CommentPos=0                ;; 0, 1-n
+ Language=C                  ;; FORTRAN, A37, ASM, C, none, default
+ Comment="/*//*/  "          ;; start and end character pairs
+ String="" ' " ' ",\         ;; start and end character pairs, escape chr.   
+ Tab=10,16,40,72             ;; up to eight fixed tab positions 
+ Keywords                    ;; The following is a list of keywords
+ if,(GREEN,YELLOW,UNDERLINE) ;; sample keyword
+ .END                        ;; End of list of keywords 
+
+Case - specifies whether the language is case sensitive. If the language
+is not case sensitive then the keywords should be specified in
+upper case.
+
+CommentPos - specifies the column position of the fixed comment or 0.
+
+Language - specifies the language type and is one of :-
+default  - Free format comment and strings etc. (Algol).
+none     - No comment or string analysis to be performed.
+A37      - 370 assembler.
+ASM      - MASM 386 assembler.
+C        - C language.
+FORTRAN  - FORTRAN language.
+
+Comment - two pairs of start characters followed by two pairs of end
+          characters. A blank implies not used.
+String  - two pairs of start characters followed by two pairs of end
+          characters. A blank implies not used.                     
+Tab     - specify up to eight fixed tab positions separated by commas.
+          Further tab characters are interpreted as multiples of
+          the Tab interval from the Preference page.
+Keywords - Starts a list of keyword definitions terminated by '.END'.
+
+ keyword,colour 
+
+The colour may be a single colour or an expression viz. :-
+  (<text_colour>,<background_colour>,<UNDERLINE>)
+                   
+The case and spaces within the keyword are significant,
+{the first character is used for the initial scan so a space would
+reduce the performance}.
+The keywords must be <=128 characters.
+{Colours may take the values :BLUE, DARKCYAN, BLACK, DARKBLUE,
+DARKPINK, DARKGRAY, DARKRED, DARKGREEN, BROWN, CYAN, RED, GREEN
+,PINK, YELLOW, PALEGRAY, DEFAULT, WHITE (ORANGE, PURPLE, PALEGREEN, 
+PALEBLUE,PALEYELLOW,PALERED,COLOUR1,..,COLOUR8)}
+
+
+Operator defines the operator keywords for each language.
+The second value indicates how to process the keyword, viz.
+< or > indicate the scan direction from the keyword to locate the label,
+'P' or 'C' indicates that the keyword specifies an entry point or call,
+':' indicates that the label will be followed by a colon,
+'2' indicates that the second label following a ',' is to be used.
+The entries may be defined as follows :-
+file_type,<º>CºP[:][2],keyword
+and are terminated by '.END', invalid entries are ignored.
+The keywords must be <=128 characters. 
+
+Keys specifies a list of functions which may be assigned
+to alternate keyboard keys. The values may be 'Ctrl+a' or 'Ctrl+Shift+A'
+where 'a' is a character. The list is terminated by '.END', e.g.
+Keys                           ;; Accelerator keys
+Backout=Ctrl+z                 ;; Backout
+BoxLine=Ctrl+l                 ;; Toggle Box/Line mode select
+Bracket=Ctrl+m                 ;; Match brackets
+Calculator=Ctrl+k              ;; Invoke calculator
+CommentSup=Ctrl+Shift+H        ;; Suppress comments
+Compare=Ctrl+Shift+F           ;; Compare files
+Compile=Ctrl+c                 ;; Compile
+ConvertCase=Ctrl+u             ;; Convert to/from upper/lower case
+DisAsm=Ctrl+d                  ;; Disassemble EXE & DLL
+Edit=Ctrl+Shift+E              ;; Edit line
+Expand=Ctrl+e                  ;; Expand label
+Hex=Ctrl+h                     ;; Display original file in Hex
+Highlight=Ctrl+i               ;; Highlight label under cursor
+HighlightSup=Ctrl+y            ;; Suppress highlighted lines
+LocateHigh=Ctrl+Shift+I        ;; Make locate argument of highlighted label
+Playback=Ctrl+p                ;; Playback
+Record=Ctrl+r                  ;; Record
+SaveFile=Ctrl+Shift+S          ;; Save File
+Search=Ctrl+g                  ;; Search directories
+Structure=Ctrl+s               ;; Display structure
+XREF=Ctrl+x                    ;; Search children for strings
+.END                           ;;  
+
+TransferPgm specifies the programme name invoked 
+from the Allocate widow. The data from the COMBO box is passed
+without modification to the TransferPgm when the Transfer button is
+selected.
+
+Tool bar
+========
+The Tool bar may be used to set an option etc. quickly.  
+The following buttons are available :-
+
+ - Hide/re-instate highlighted records from display.
+ - Display/Create structure List box.
+ - Toggle Line No. display.
+ - Copy highlighted records to Clipboard.
+ - Cascade Child windows.
+ - Tile Child windows.
+ - Toggle Tab expansion.
+ - Toggle Include option.
+ - Repeat last Locate command.
+ - display the record references to the highlighted label.
+ - suppress/display the comments in a language file.
+   If a single line is scrolled then the comment suppression will be disabled.
+ - Expand the highlighted label.
+ - Save the file.
+ - Compile file
+ - Copy the selected records to the Clipboard and erase from from memory.
+ - Overwrite the current line with records from the Clipboard.
+ - Delete records from memory.
+ - Re-insert the last deleted records.
+ - Clear select area.  
+ - Switch to/from box mode select.
+ - Convert select area to upper/lower case.
+ - Search current directory for string.
+ - Compare two files and create a composite file.
+ - Playback previously recorded keystrokes.
+ - Switch on/off recording of keystrokes.     
+ - Select the next child and make it active.
+
+ 
+
+If mouse button 2 is held down on a button then a small help
+balloon will be displayed. The structure of the Tool bar may be modified
+by using the "T" page of the Configure notebook. If the Tool bar is in the
+menu then if button 2 is held down and moved to a new position the button 
+will be moved.
+
+
+
+Add/Modify a language
+=====================
+Alpha has within it (hard coded) routines which understand
+certain language features e.g. 370 Assembler 
+procedures are invoked by BAL, BAS etc.     
+  
+
+START ALPHA /p profile_name          
+
+
+A sample profile (ALPHA.PRF) is provided in the package, which
+includes comments explaining the use of the keywords. This may
+be edited to change/add a file extension i.e.
+by modifying the following keywords :-     
+
+Extension - list of file extensions up to 128 characters         
+             
+
+Case - case sensitivity.
+CommentPos - For Fixed comments
+Comment - Comment delimiters
+String - string delimiters and escape character
+Language - language structure
+Keywords - list of keyword definitions                   
+i.e.                               
+keyword,colour      
+
+Operator - list of language operator values and
+           attributes
+
+file_type,attributes,keyword     
+
+                                                                
+                
+
+e.g. to add language XYZ with a routine call 'ICALL
+routine_name'  with similar structure to PL/S the profile would
+include the following statements :-          
+
+                                                                
+                                                           
+Extension="A37,ASM,PAS,XYZ,C,FOR,"                              
+               
+[XYZ]
+Case=No
+Language=default
+CommentPos=0
+String="" ' " ' "
+Comment="/*  */  "
+Keywords
+ICALL,DARKGREEN                                          
+Next_key ,RED                                            
+.END   
+
+Operator
+XYZ,>C,ICALL
+.END                     
+
+
+
+The ALPHA programme scans the keyword table in the order
+specified in the profile, so a later entry may replace a former
+entry.
+
+
+
+Writing a parser exit DLL
+=========================
+If the DLL, ALPHAE.DLL, has been provided in the LIBPATH then the procedure
+Alpha_parse_exit will be called from the WM_PAINT child window procedure.
+A sample source module ALPHAE.C is provided which may be used to create
+a DLL with a parser exit procedure. This module may be used to write the records
+to the child window.
+
+
+
+Recent changes to the ALPHA package.
+==================================== 
+
+1) Separate threads to read Compiler output & search directory.                      
+2) Improved bracket matching.
+3) Adobe Type 1 fixed pitch font with hexadecimal and alphanumeric characters.
+4) Ctrl+e/Shift+mouse button 2 now expand a label.
+5) Set current directory from the search dialogue box.
+
+Notes
+=====
+1 The data in the Allocate COMBO will be passed without
+modification to the Transfer_pgm.
+
+2 The COMBO box will hold the previous three search strings
+entered.
+
+
+
+3 The colours may take the values :BLUE, DARKCYAN, BLACK,
+DARKBLUE, DARKPINK, DARKGRAY, DARKRED, DARKGREEN, BROWN, CYAN,
+RED, GREEN ,PINK, YELLOW, PALEGRAY, DEFAULT, WHITE, 
+ORANGE, PURPLE, PALEGREEN, PALEBLUE, PALEYELLOW, PALERED,
+COLOUR1,..,COLOUR8.
+{The last nine colours will not be available on VGA screens.
+The COLOURn value may be set by the sliders and will be remembered
+when the Enter button is pressed.}
+
+
+
+
+
+4 If mouse button 1 is held down and moved to the bottom or top
+of the window the window will continue to scroll until the
+button is released or the mouse is moved back within the window.
+
+5 The ALPHA2.HLP file must be installed in the HELP path.
+
+6 A sample profile is supplied with the name ALPHA.PRF. This
+file may be edited to alter the programme defaults. The profile
+is read by specifying /p as a parameter to the programme. 
+
+
+
+7 These keywords and attributes may be specified by the
+Language_operator keyword in the profile.
+
+=============== End of Alpha text file =============================
